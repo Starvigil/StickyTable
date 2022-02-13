@@ -31,7 +31,11 @@
           </th>
           <!-- Scores -->
           <td v-for="item in filters" v-bind:key="item._id">
-            <v-chip label :color="getColor(question._id, item._id)">
+            <v-chip
+              label
+              :color="getColor(question._id, item._id)"
+              :text-color="getDarkerColor(question._id, item._id)"
+            >
               {{ getScore(question._id, item._id) }}
             </v-chip>
           </td>
@@ -46,27 +50,26 @@ import questions from "../assets/questions.json";
 import scores from "../assets/scores.json";
 import Vue from "vue";
 
-export interface Filter{
-  "_id": string
-	"fr": string,
-	"en": string
+export interface Filter {
+  _id: string;
+  fr: string;
+  en: string;
 }
 
 export interface Question {
-	"_id": string,
-	"labels": {
-		"fr": string,
-    "en": string
-	}
+  _id: string;
+  labels: {
+    fr: string;
+    en: string;
+  };
 }
 export interface Scores {
-  question_id: string; 
-  scores: { 
-    filter_id: string; 
-    value: number; 
+  question_id: string;
+  scores: {
+    filter_id: string;
+    value: number;
   }[][];
 }
-
 
 export default Vue.extend({
   name: "SimpleTable",
@@ -79,11 +82,11 @@ export default Vue.extend({
         { text: "fr", value: "fr" },
       ],
       filters: [] as Filter[],
-      scores:  [] as Scores[],
-      questions:  [] as Question[],
+      scores: [] as Scores[],
+      questions: [] as Question[],
     };
   },
-  created: function(){
+  created: function () {
     // Load data from json files
     this.filters = filters;
     this.questions = questions;
@@ -95,7 +98,8 @@ export default Vue.extend({
       return this.questions.filter((quesition: Question) => {
         // console.log(quesition.labels[this.language], this.search);
         return (
-          !this.search || quesition.labels[this.language]
+          !this.search ||
+          quesition.labels[this.language]
             .toLowerCase()
             .indexOf(this.search.toLowerCase()) > -1
         );
@@ -150,6 +154,11 @@ export default Vue.extend({
       } else {
         return "score_10_light";
       }
+    },
+    getDarkerColor(question_id: string, filter_id: string) {
+      var darkerColor = this.getColor(question_id, filter_id);
+      darkerColor = darkerColor.replace("light", "dark");
+      return darkerColor;
     },
     // Get the score value based on the question_id and filter_id
     getScore(question_id: string, filter_id: string) {
@@ -226,13 +235,16 @@ thead th {
 } */
 
 /* make table prettier */
-th,
-td {
+th, td {
   padding: 8px 16px;
   border: 1px solid #e7e6e6;
   text-align: center;
-  font-family: arial, sans-serif;
   font-weight: 100;
+}
+
+/* Make the scores bold */
+td {
+  font-weight: 700;
 }
 
 /* Make every second entry slighty darker */

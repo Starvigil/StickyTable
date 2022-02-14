@@ -36,7 +36,9 @@
               :color="getColor(question._id, item._id)"
               :text-color="getDarkerColor(question._id, item._id)"
             >
-              {{ getScore(question._id, item._id) }}
+              {{
+                getScore(question._id, item._id)
+              }}
             </v-chip>
           </td>
         </tr>
@@ -185,14 +187,12 @@ export default Vue.extend({
 <style>
 /* Limit table size and set overflow to be (diagonally) scrollable (and smooth)*/
 .table {
-  width: 1000px;
-  max-width: 1000px;
+  width: 1500px;
   max-height: 800px;
   overflow: scroll;
 }
 /* Make table prettier */
 table {
-  font-family: arial, sans-serif;
   border-collapse: collapse;
 }
 /* Make Countries be sticky at the top */
@@ -214,12 +214,12 @@ tbody th {
 thead th:first-child {
   left: 0;
   z-index: 2;
-  min-width: 400px;
+  min-width: 450px;
 }
 tbody th:first-child {
   left: 0;
   z-index: 1;
-  min-width: 400px;
+  min-width: 450px;
   background: rgb(255, 255, 255);
 }
 
@@ -229,17 +229,15 @@ thead th {
   height: 70px !important;
 }
 
-/* tbody th {
-  background: rgb(145, 39, 39);
-  border-right: 1px solid #ddd;
-} */
-
 /* make table prettier */
-th, td {
+th,
+td {
   padding: 8px 16px;
   border: 1px solid #e7e6e6;
   text-align: center;
-  font-weight: 100;
+  font-weight: 400;
+  min-width: 150px;
+  height: 70px !important;
 }
 
 /* Make the scores bold */
@@ -253,5 +251,13 @@ tbody tr:nth-child(even) th {
 }
 tr:nth-child(even) {
   background-color: #f3f3f3;
+}
+
+/* Make score look like the mockup */
+.v-chip {
+  width: 30px !important;
+  height: 30px !important;
+  padding: 0 6px !important;
+  display: inline-block !important;
 }
 </style>
